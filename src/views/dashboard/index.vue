@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
+import {getList} from '@/api/project'
 
 export default {
   name: 'Dashboard',
@@ -13,6 +14,9 @@ export default {
     ...mapGetters([
       'name'
     ])
+  },
+  created() {
+    getList({})
   }
 }
 </script>
