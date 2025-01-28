@@ -4,6 +4,6 @@ export function getList(params) {
   return request({
     url: '/project/list',
     method: 'post',
-    params
+    data: params
   })
 }
