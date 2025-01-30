@@ -1,22 +1,16 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">name:</div>
   </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import {getList} from '@/api/project'
 
 export default {
   name: 'Dashboard',
   computed: {
-    ...mapGetters([
-      'name'
-    ])
   },
   created() {
-    getList({})
   }
 }
 </script>
