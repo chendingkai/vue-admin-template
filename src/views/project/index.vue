@@ -52,12 +52,38 @@
           {{ scope.row.updateTime }}
         </template>
       </el-table-column>
+      <el-table-column
+        prop="operator"
+        align="center"
+        label="操作"
+      >
+        <template v-slot="scope">
+          <el-button
+            size="mini"
+            type="text"
+            @click="projectDetail(scope.row)"
+          >查看
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            @click="projectEdit(scope.row)"
+          >编辑
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            @click="projectDelete(scope.row)"
+          >删除
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
-      :page-sizes="[10,20,50]"
-      :page-count="page.pageSize"
-      :current-page="page.currentPage"
-      :total="page.total"
+      :page-sizes="[1,20,50]"
+      :page-count="projectVo.pageSize"
+      :current-page="projectVo.pageNo"
+      :total="projectVo.total"
       layout="total, sizes, prev, pager, next"
       prev-text="上一页"
       next-text="下一页"
@@ -69,39 +95,51 @@
 </template>
 
 <script>
-import {getList} from '@/api/project'
+import {getListByPage} from '@/api/project'
 
 export default {
   data() {
     return {
-      list: null,
+      list: [],
       listLoading: true,
       projectColumns: [],
       operation: [],
-      page: {
-        currentPage: 1,
-        pageSize: 10,
+      projectVo: {
+        pageNo: 0,
+        pageSize: 1,
         total: 0
       }
     }
   },
   created() {
-    this.fetchData()
+    this.projectListByPage(this.projectVo)
   },
   methods: {
     sizeChange(val) {
-
+      this.projectVo.pageSize = val
+      this.projectListByPage(this.projectVo)
     },
     currentChange(val) {
-
+      this.projectVo.pageNo = val
+      this.projectListByPage(this.projectVo)
     },
 
-    fetchData() {
+    projectListByPage(projectVo) {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data
+      getListByPage(projectVo).then(response => {
+        this.list = response.data.records
+        this.projectVo.total = response.data.total
         this.listLoading = false
       })
+    },
+    projectDetail(row) {
+
+    },
+    projectEdit(row) {
+
+    },
+    projectDelete(row) {
+
     }
   }
 }

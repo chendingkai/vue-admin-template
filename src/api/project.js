@@ -7,3 +7,11 @@ export function getList(params) {
     data: params == null ? {} : params
   })
 }
+
+export function getListByPage(params) {
+  return request({
+    url: '/project/listByPage',
+    method: 'post',
+    data: params == null ? {} : params
+  })
+}
