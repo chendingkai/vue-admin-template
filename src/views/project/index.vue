@@ -80,14 +80,12 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      :page-sizes="[1,20,50]"
+      style="margin-top: 10px;text-align: right"
+      :page-sizes="[10,20,50]"
       :page-count="projectVo.pageSize"
       :current-page="projectVo.pageNo"
       :total="projectVo.total"
       layout="total, sizes, prev, pager, next"
-      prev-text="上一页"
-      next-text="下一页"
-      total-text="总数"
       @size-change="sizeChange"
       @current-change="currentChange"
     />
@@ -95,7 +93,7 @@
 </template>
 
 <script>
-import {getListByPage} from '@/api/project'
+import {getListByPage, ymlDetailById} from '@/api/project'
 
 export default {
   data() {
@@ -106,7 +104,7 @@ export default {
       operation: [],
       projectVo: {
         pageNo: 0,
-        pageSize: 1,
+        pageSize: 10,
         total: 0
       }
     }
@@ -133,7 +131,9 @@ export default {
       })
     },
     projectDetail(row) {
-
+      ymlDetailById(row).then(response => {
+        console.log(response)
+      })
     },
     projectEdit(row) {
 
