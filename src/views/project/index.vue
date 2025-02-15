@@ -89,15 +89,27 @@
       @size-change="sizeChange"
       @current-change="currentChange"
     />
+    <yml-editor
+      ref="init"
+      :visible="visible"
+      :ymlData="ymlData"
+      @closeEditor="closeEditor"
+      @submitProjectEdit="submitProjectEdit"
+    />
   </div>
 </template>
 
 <script>
-import {getListByPage, ymlDetailById} from '@/api/project'
+import {getListByPage, ymlDetailById, ymlEdit} from '@/api/project'
+import ymlEditor from '@/components/YmlEditor/index.vue'
 
 export default {
+  components: {ymlEditor},
   data() {
     return {
+      ymlData: '',
+      visible: false,
+      title: '',
       list: [],
       listLoading: true,
       projectColumns: [],
@@ -132,14 +144,27 @@ export default {
     },
     projectDetail(row) {
       ymlDetailById(row).then(response => {
-        console.log(response)
+        console.log(response.data)
+        this.ymlData = response.data
+        this.visible = true
+        this.title = 'project detail'
       })
     },
     projectEdit(row) {
-
+      this.projectDetail(row)
+    },
+    submitProjectEdit(param) {
+      console.log('submitProjectEdit')
+      ymlEdit(param).then(response => {
+        console.log(response.data)
+      })
     },
     projectDelete(row) {
 
+    },
+    closeEditor() {
+      console.log('closeEditor')
+      this.visible = false
     }
   }
 }

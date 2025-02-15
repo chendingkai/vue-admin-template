@@ -32,3 +32,10 @@ export function ymlDetailById(params) {
   })
 }
 
+export function ymlEdit(params) {
+  return request({
+    url: '/project/ymlEdit',
+    method: 'post',
+    data: params == null ? {} : params
+  })
+}
